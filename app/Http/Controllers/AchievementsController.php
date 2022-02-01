@@ -17,4 +17,5 @@ class AchievementsController extends Controller
             'remaing_to_unlock_next_badge' => 0
         ]);
     }
+    
 }
