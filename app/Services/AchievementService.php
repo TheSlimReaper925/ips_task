@@ -20,7 +20,7 @@ class AchievementService{
 	static public function countLessonsWatched()
 	{
 		if (User::where('user_id', $user_id)->first() != null) {
-			return User::where('id', $user_id)->withCount('watched')->first();
+			return User::where('id', $user_id)->withCount('watched')->first()->watched_count;
 		}else{
 			return "User doesn't exist!";
 		}
