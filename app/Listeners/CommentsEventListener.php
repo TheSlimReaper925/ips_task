@@ -27,23 +27,24 @@ class CommentsEventListener
      */
     public function handle($event)
     {
-        $count = AchievementService::countCommentsWritten($event->user->id);
+        $count = AchievementService::countCommentsWritten($event->comment->user_id);
+        $user = User::where('id', $event->comment->user_id)->first();
 
         switch ($count) {
             case 1:
-                event(new AchievementUnlockedEvent($event->user, "First Comment Written"));
+                event(new AchievementUnlockedEvent($user, "First Comment Written"));
                 break;
             case 3:
-                event(new AchievementUnlockedEvent($event->user, "3 Comments Written"));
+                event(new AchievementUnlockedEvent($user, "3 Comments Written"));
                 break;
             case 5:
-                event(new AchievementUnlockedEvent($event->user, "5 Comments Written"));
+                event(new AchievementUnlockedEvent($user, "5 Comments Written"));
                 break;
             case 10:
-                event(new AchievementUnlockedEvent($event->user, "10 Comments Written"));
+                event(new AchievementUnlockedEvent($user, "10 Comments Written"));
                 break;
             case 20:
-                event(new AchievementUnlockedEvent($event->user, "20 Comments Written"));
+                event(new AchievementUnlockedEvent($user, "20 Comments Written"));
                 break;
         }
     }
