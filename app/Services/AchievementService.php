@@ -92,6 +92,25 @@ class AchievementService{
 		return (AchievementService::countCommentsAchievements($user_id) + AchievementService::countLessonsWatchedAchievements($user_id));
 	}
 
+	static public function badgeIndex($user_id)
+	{
+		$achievements = AchievementService::countTotalAchievements($user_id);
+		switch (true) {
+			case ($achievements >=0 && $achievements < 4):
+				return 0;
+				break;
+			case ($achievements >= 4 && $achievements < 8):
+				return 1;
+				break;
+			case ($achievements >= 8 && $achievements < 10):
+				return 2;
+				break;
+			case ($achievements == 10):
+				return 3;
+				break;	
+		}
+	}
+
 	static public function unlockedAchievements($user_id)
 	{
 		$commentAchievements = Unlockables::CommentAchievements;
@@ -100,6 +119,22 @@ class AchievementService{
 		$lessons = array_splice($lessonAchievements, 0, AchievementService::countLessonsWatchedAchievements($user_id));
 		$result = array_merge($comments, $lessons);
 		return $result;
+	}
+
+	static public function netxAvailableAchievements($user_id)
+	{
+		$commentAchievements = Unlockables::CommentAchievements;
+		$lessonAchievements = Unlockables::LessonAchievements;
+		$mergedAchievements = array_merge($commentAchievements, $lessonAchievements);
+		return array_values(array_diff($mergedAchievements, AchievementService::unlockedAchievements($user_id)));
+	}
+
+	static public function remainingForNextAchievements($user_id, $index)
+	{
+		$next_badge = isset(Unlockables::Milestones[$index + 1]) ? Unlockables::Milestones[$index + 1] : 10;
+		$current_achievements = AchievementService::countTotalAchievements($user_id);
+
+		return $next_badge - $current_achievements;
 	}
 
 }

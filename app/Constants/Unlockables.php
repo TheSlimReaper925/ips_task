@@ -23,4 +23,8 @@ abstract class Unlockables {
         "Advanced",
         "Master",
     ];
+
+    const Milestones = [
+        0, 4, 8, 10
+    ];
 }
