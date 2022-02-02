@@ -22,7 +22,7 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\BadgeUnlockListener::class,
         ],
         LessonWatched::class => [
-            \App\Listeners\LessonWatchedListener::class,
+            \App\Listeners\LessonWatchedEventListener::class,
             \App\Listeners\BadgeUnlockListener::class,
         ],
         AchievementUnlockedEvent::class => [

@@ -28,7 +28,6 @@ class LessonWatchedEventListener
     public function handle($event)
     {
         $count = AchievementService::countLessonsWatched($event->user->id);
-
         switch ($count) {
             case 1:
                 event(new AchievementUnlockedEvent($event->user, "First Lesson Watched"));

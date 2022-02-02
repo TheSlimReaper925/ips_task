@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Constants\Unlockables;
 use App\Services\AchievementService;
 use Illuminate\Http\Request;
-use App\Events\CommentWritten;
-use App\Models\Comment;
-use App\Constants\Unlockables;
 
 class AchievementsController extends Controller
 {

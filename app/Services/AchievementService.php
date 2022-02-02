@@ -18,7 +18,7 @@ class AchievementService{
 		}
 	}
 
-	static public function countLessonsWatched()
+	static public function countLessonsWatched($user_id)
 	{
 		if (User::where('id', $user_id)->first() != null) {
 			return User::where('id', $user_id)->withCount('watched')->first()->watched_count;
