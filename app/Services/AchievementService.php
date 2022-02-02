@@ -5,12 +5,13 @@ namespace App\Services;
 use App\Models\Comment;
 use App\Models\Lesson;
 use App\Models\User;
+use App\Constants\Unlockables;
 
 class AchievementService{
 
 	static public function countCommentsWritten($user_id)
 	{
-		if (User::where('user_id', $user_id)->first() != null) {
+		if (User::where('id', $user_id)->first() != null) {
 			return Comment::where('user_id', $user_id)->count();
 		}else{
 			return "User doesn't exist!";
@@ -19,7 +20,7 @@ class AchievementService{
 
 	static public function countLessonsWatched()
 	{
-		if (User::where('user_id', $user_id)->first() != null) {
+		if (User::where('id', $user_id)->first() != null) {
 			return User::where('id', $user_id)->withCount('watched')->first()->watched_count;
 		}else{
 			return "User doesn't exist!";
@@ -28,7 +29,7 @@ class AchievementService{
 
 	static public function countCommentsAchievements($user_id)
 	{
-		if (User::where('user_id', $user_id)->first() != null) {
+		if (User::where('id', $user_id)->first() != null) {
 			$count = Comment::where('user_id', $user_id)->count();
 			//counting achievements based on how many comment user has written
 			switch (true) {
@@ -58,7 +59,7 @@ class AchievementService{
 
 	static public function countLessonsWatchedAchievements($user_id)
 	{
-		if (User::where('user_id', $user_id)->first() != null) {
+		if (User::where('id', $user_id)->first() != null) {
 			$count = User::where('id', $user_id)->withCount('watched')->first()->watched_count;
 			//counting achievements based on how many lessons user has watched
 			switch (true) {
@@ -89,6 +90,16 @@ class AchievementService{
 	static public function countTotalAchievements($user_id)
 	{
 		return (AchievementService::countCommentsAchievements($user_id) + AchievementService::countLessonsWatchedAchievements($user_id));
+	}
+
+	static public function unlockedAchievements($user_id)
+	{
+		$commentAchievements = Unlockables::CommentAchievements;
+		$lessonAchievements = Unlockables::LessonAchievements;
+		$comments = array_splice($commentAchievements, 0, AchievementService::countCommentsAchievements($user_id));
+		$lessons = array_splice($lessonAchievements, 0, AchievementService::countLessonsWatchedAchievements($user_id));
+		$result = array_merge($comments, $lessons);
+		return $result;
 	}
 
 }

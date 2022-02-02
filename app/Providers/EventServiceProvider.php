@@ -18,12 +18,12 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         CommentWritten::class => [
-            App\Listeners\CommentsEventListener::class,
-            App\Listeners\BadgeUnlockListener::class,
+            \App\Listeners\CommentsEventListener::class,
+            \App\Listeners\BadgeUnlockListener::class,
         ],
         LessonWatched::class => [
-            App\Listeners\LessonWatchedListener::class,
-            App\Listeners\BadgeUnlockListener::class,
+            \App\Listeners\LessonWatchedListener::class,
+            \App\Listeners\BadgeUnlockListener::class,
         ],
         AchievementUnlockedEvent::class => [
             //code to implement
